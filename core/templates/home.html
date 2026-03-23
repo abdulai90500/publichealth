@@ -311,6 +311,41 @@ section {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
+
+/* Team container grid */
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Individual team cards */
+.team-card {
+  flex: 1 1 200px; /* responsive width */
+  max-width: 250px;
+  text-align: center;
+}
+
+/* Team images */
+.team-card img {
+  width: 100%;
+  height: auto; /* maintain aspect ratio */
+  object-fit: contain; /* ensures whole face is visible */
+  border-radius: 10px;
+}
+
+/* Responsive adjustment: on small screens stack cards */
+@media (max-width: 600px) {
+  .team-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .team-card img {
+    width: 80%; /* smaller width on mobile for better fit */
+  }
+}
+
 #team {
   padding: 60px 20px;
   background: #f4f7fb;
