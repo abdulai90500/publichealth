@@ -134,6 +134,19 @@ body {
   font-weight: bold;
 }
 
+/* TYPE BADGES */
+.type-badge {
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.type-notes { background-color: #007bff; }      /* Blue for Notes */
+.type-exam { background-color: #dc3545; }       /* Red for Exam Paper */
+.type-video { background-color: #28a745; }      /* Green for Video */
+
 .note-footer {
   margin-top: 10px;
   display: flex;
@@ -153,6 +166,18 @@ body {
 .btn-note-view { background: #28a745; }
 .btn-note-edit { background: #ffc107; color: #000; }
 .btn-note-delete { background: #dc3545; }
+
+/* Responsive */
+@media(max-width: 992px){
+  .notes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media(max-width: 768px){
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 <body>
@@ -188,65 +213,52 @@ body {
     </div>
   </div>
 
- <!-- ===== COMPACT & STYLISH UPLOAD FORM ===== -->
-<div class="form-box" id="formBox" style="max-width: 450px; margin: 40px auto; padding: 20px; background-color: #f1f5f9; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); font-family: Arial, sans-serif;">
-  <h3 style="text-align: center; color: #1d3557; margin-bottom: 20px; font-size: 1.4em;">Upload Content</h3>
-  
-  <form method="POST" enctype="multipart/form-data" action="{% url 'upload_note' %}" style="display: flex; flex-direction: column; gap: 12px;">
-    {% csrf_token %}
-    
-    <label style="font-weight: 600; color: #333; font-size: 0.95em;">MODULE</label>
-    <input type="text" name="title" required
-           style="padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-size: 0.95em;"
-           onfocus="this.style.borderColor='#457b9d'" onblur="this.style.borderColor='#ccc'">
+  <!-- UPLOAD FORM -->
+  <div class="form-box" id="formBox" style="max-width: 450px; margin: 40px auto;">
+    <h3 style="text-align:center; color:#1d3557; margin-bottom:20px;">Upload Content</h3>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'upload_note' %}" style="display:flex; flex-direction: column; gap:12px;">
+      {% csrf_token %}
+      <label>Module</label>
+      <input type="text" name="title" required>
+      <label>Year</label>
+      <select name="year">
+        <option>1</option><option>2</option><option>3</option><option>4</option>
+      </select>
+      <label>Category</label>
+      <input type="text" name="category" required>
+      <label>Type</label>
+      <select name="type">
+        <option value="notes">Notes</option>
+        <option value="exam">Exam Paper</option>
+        <option value="video">Video Link</option>
+      </select>
+      <label>PDF File</label>
+      <input type="file" name="file">
+      <label>Video URL</label>
+      <input type="url" name="video_url">
+      <button type="submit" style="background-color:#457b9d;">Upload</button>
+    </form>
+  </div>
 
-    <label style="font-weight: 600; color: #333; font-size: 0.95em;">Year</label>
-    <select name="year" style="padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95em; cursor: pointer;">
-      <option>1</option><option>2</option><option>3</option><option>4</option>
-    </select>
-
-    <label style="font-weight: 600; color: #333; font-size: 0.95em;">Category</label>
-    <input type="text" name="category" required
-           style="padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-size: 0.95em;"
-           onfocus="this.style.borderColor='#457b9d'" onblur="this.style.borderColor='#ccc'">
-
-    <label style="font-weight: 600; color: #333; font-size: 0.95em;">Type</label>
-    <select name="type" style="padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95em; cursor: pointer;">
-      <option value="notes">Notes</option>
-      <option value="exam">Exam Paper</option>
-      <option value="video">Video Link</option>
-    </select>
-
-    <label style="font-weight: 600; color: #333; font-size: 0.95em;">PDF File</label>
-    <input type="file" name="file" style="padding: 5px; font-size: 0.95em; border-radius: 8px; border: 1px solid #ccc; cursor: pointer;">
-
-    <label style="font-weight: 600; color: #333; font-size: 0.95em;">Video URL</label>
-    <input type="url" name="video_url"
-           style="padding: 8px 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-size: 0.95em;"
-           onfocus="this.style.borderColor='#457b9d'" onblur="this.style.borderColor='#ccc'">
-
-    <button type="submit"
-            style="margin-top: 15px; padding: 10px; border: none; border-radius: 10px; background-color: #457b9d; color: white; font-size: 1em; cursor: pointer; transition: background 0.3s;">
-      Upload
-    </button>
-  </form>
-</div>
   <!-- NOTES GRID -->
   <div id="notes-section">
-    <h3>📚 All Notes</h3>
+    <h3>📚 All Notes & Resources</h3>
     <div class="notes-grid">
       {% for note in notes %}
       <div class="note-card">
         <div class="note-header">
           <span>{{ note.title }}</span>
-          <span>{{ note.type|capfirst }}</span>
+          <span class="type-badge 
+            {% if note.type == 'notes' %}type-notes{% elif note.type == 'exam' %}type-exam{% elif note.type == 'video' %}type-video{% endif %}">
+            {{ note.type|capfirst }}
+          </span>
         </div>
         <p>Year {{ note.year }} | {{ note.category }}</p>
         <div class="note-footer">
-          {% if note.type == 'video' %}
-            <a class="btn-note btn-note-view" href="{{ note.video_url }}" target="_blank">▶ View</a>
+          {% if note.type == 'video' and note.video_url %}
+            <a class="btn-note btn-note-view" href="{{ note.video_url }}" target="_blank">▶ Watch Video</a>
           {% elif note.file %}
-            <a class="btn-note btn-note-view" href="{{ note.file.url }}" target="_blank">📄 View</a>
+            <a class="btn-note btn-note-view" href="{{ note.file.url }}" target="_blank">📄 Download/View</a>
           {% endif %}
           <a class="btn-note btn-note-edit" href="{% url 'edit_note' note.id %}">✏ Edit</a>
           <form method="POST" action="{% url 'delete_note' note.id %}" style="display:inline;">
@@ -256,7 +268,7 @@ body {
         </div>
       </div>
       {% empty %}
-        <p>No notes available.</p>
+      <p>No notes available yet.</p>
       {% endfor %}
     </div>
   </div>
@@ -264,29 +276,11 @@ body {
 </div>
 
 <script>
-  
-// Toggle sidebar on mobile
-const mobileToggle = document.getElementById('mobileToggle');
-const sidebar = document.querySelector('.sidebar');
-
-mobileToggle.addEventListener('click', () => {
-  sidebar.classList.toggle('show');
-});
-
-// Optional: close sidebar when a link is clicked
-document.querySelectorAll('.sidebar a, .sidebar button').forEach(link => {
-  link.addEventListener('click', () => {
-    if(window.innerWidth <= 768){
-      sidebar.classList.remove('show');
-    }
-  });
-});
-
+// Toggle upload form
 function toggleForm() {
   let form = document.getElementById("formBox");
   form.style.display = (form.style.display === "none") ? "block" : "none";
 }
 </script>
-
 </body>
 </html>

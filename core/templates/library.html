@@ -7,199 +7,61 @@
 <title>Public Health – Library</title>
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <style>
-body {
-    font-family: 'Arial', sans-serif;
-    background: #f0f2f5;
-    margin: 0;
-    padding: 0;
-}/* NAVBAR */
-nav {
-    background: #1d3557;
-    color: #fff;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-}
+body { font-family: 'Arial', sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
 
-nav .nav-links {
-    list-style: none;
-    display: flex; /* desktop default */
-    gap: 15px;
-}
+/* NAVBAR */
+nav { background: #1d3557; color: #fff; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; }
+nav .nav-links { list-style: none; display: flex; gap: 15px; }
+nav .nav-links li a { color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 6px; transition: background 0.3s; }
+nav .nav-links li a:hover { background: #457b9d; }
+.nav-toggle { display: none; background: none; border: none; font-size: 28px; color: #fff; cursor: pointer; }
 
-nav .nav-links li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: background 0.3s;
-}
-nav .nav-links li a:hover {
-    background: #457b9d;
-}
-nav .nav-cta {
-    background: #e63946;
-}
-nav .nav-cta:hover {
-    background: #d62828;
-}
-
-/* HAMBURGER TOGGLE - MOBILE */
-.nav-toggle {
-    display: none; /* hidden on desktop */
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* MOBILE STYLES */
-@media (max-width: 768px) {
-    nav .nav-links {
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background: #1d3557;
-        flex-direction: column;
-        width: 200px;
-        padding: 15px 0;
-        display: none; /* hidden by default */
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 100;
-    }
-
-    nav .nav-links.show {
-        display: flex;
-    }
-
-    nav .nav-links li {
-        margin: 10px 0;
-        text-align: center;
-    }
-
-    .nav-toggle {
-        display: block; /* show hamburger on mobile */
-    }
-}
 /* HEADER */
-.header {
-    background: linear-gradient(135deg, #288bdc, #1b8baa);
-    color: #fff;
-    padding: 30px 20px;
-    text-align: center;
-    border-radius: 0 0 20px 20px;
-}
-.header h2 {
-    margin: 0;
-    font-size: 32px;
-}
+.header { background: linear-gradient(135deg, #288bdc, #1b8baa); color: #fff; padding: 30px 20px; text-align: center; border-radius: 0 0 20px 20px; }
+.header h2 { margin: 0; font-size: 32px; }
 
 /* CONTAINER */
-.container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 15px;
+.container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
+
+/* SEARCH BAR */
+.search-bar { margin: 20px 0; text-align: center; }
+.search-bar input, .search-bar select {
+    padding: 10px 15px; width: 200px; margin: 5px;
+    border-radius: 8px; border: 1px solid #ccc; font-size: 14px;
 }
 
 /* GRID LAYOUT */
-.notes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
+.notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
 /* NOTE CARD */
 .note-card {
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: #fff; border-radius: 15px; overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1); display: flex;
+    flex-direction: column; transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
 }
-.note-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-}
+.note-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
 
-/* TYPE RIBBON */
-.note-card .note-type {
-    position: absolute;
-    top: 15px;
-    right: -10px;
-    background: #ffbe0b;
-    color: #fff;
-    padding: 6px 12px;
-    font-size: 12px;
-    font-weight: bold;
-    transform: rotate(45deg);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+/* TYPE BADGE */
+.note-type {
+    position: absolute; top: 15px; right: -10px; padding: 6px 12px; font-size: 12px; font-weight: bold;
+    color: #fff; transform: rotate(45deg);
 }
+.note-type.notes { background-color: #007bff; }      /* Blue = Notes */
+.note-type.exam { background-color: #dc3545; }       /* Red = Past Paper */
+.note-type.video { background-color: #28a745; }      /* Green = Video */
 
-/* NOTE HEADER & META */
-.note-header {
-    font-weight: bold;
-    font-size: 18px;
-    padding: 20px 15px 5px 15px;
-}
-.note-meta {
-    font-size: 14px;
-    color: #666;
-    padding: 0 15px 15px 15px;
-}
-
-/* FOOTER BUTTONS */
-.note-footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 15px;
-    border-top: 1px solid #eee;
-}
-.note-footer a, .note-footer button {
-    flex: 1;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-.note-footer a {
-    background: #64a1ec;
-    color: #fff;
-}
-.note-footer a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.note-footer button {
-    background: #5656ef;
-    color: #fff;
-}
-.note-footer button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
+.note-header { font-weight: bold; font-size: 18px; padding: 20px 15px 5px 15px; }
+.note-meta { font-size: 14px; color: #666; padding: 0 15px 15px 15px; }
+.note-footer { display: flex; flex-wrap: wrap; gap: 10px; padding: 15px; border-top: 1px solid #eee; }
+.note-footer a, .note-footer button { flex: 1; padding: 10px 15px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; text-align: center; color: #fff; }
+.note-footer a { background: #64a1ec; text-decoration: none; }
+.note-footer button { background: #5656ef; }
+.note-footer a:hover, .note-footer button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
 /* RESPONSIVE */
-@media(max-width: 768px){
-    .notes-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-}
-@media(max-width: 480px){
-    .notes-grid {
-        grid-template-columns: 1fr;
-    }
-}
+@media(max-width: 768px){ .notes-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); } }
+@media(max-width: 480px){ .notes-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -207,63 +69,77 @@ nav .nav-cta:hover {
 <!-- NAVBAR -->
 <nav id="main-nav">
   <a class="nav-logo" href="#home">Public Health <span>PORTAL</span></a>
-
-  <!-- HAMBURGER TOGGLE -->
   <button class="nav-toggle" id="nav-toggle">&#9776;</button>
-
   <ul class="nav-links" id="nav-links">
     <li><a href="{% url 'home' %}" class="active">Home</a></li>
-    <li><a href="{% url 'home' %}">About</a></li>
-    <li><a href="{% url 'home' %}">Services</a></li>
-    <li><a href="{% url 'home' %}">Team</a></li>
-    <li><a href="{% url 'home' %}">Contact</a></li>
     <li><a href="{% url 'library' %}">Library</a></li>
     <li><a class="nav-cta" href="{% url 'login' %}">Admin Login</a></li>
   </ul>
 </nav>
+
 <div class="header">
     <h2>📚 Public Health Library</h2>
 </div>
 
 <div class="container">
-    {% if notes %}
-    <div class="notes-grid">
+
+    <!-- SEARCH/FILTER -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by title or category..." onkeyup="filterNotes()">
+        <select id="typeFilter" onchange="filterNotes()">
+            <option value="all">All Types</option>
+            <option value="notes">Notes</option>
+            <option value="exam">Past Paper</option>
+            <option value="video">Video</option>
+        </select>
+    </div>
+
+    <!-- NOTES GRID -->
+    <div class="notes-grid" id="notesGrid">
         {% for note in notes %}
-        <div class="note-card">
-            <div class="note-type">{{ note.type|capfirst }}</div>
+        <div class="note-card" data-title="{{ note.title|lower }}" data-category="{{ note.category|lower }}" data-type="{{ note.type|lower }}">
+            <div class="note-type {{ note.type|lower }}">{{ note.type|capfirst }}</div>
             <div class="note-header">{{ note.title }}</div>
             <div class="note-meta">Year {{ note.year }} | Category: {{ note.category }} | Uploaded: {{ note.uploaded_at|date:"M d, Y" }}</div>
             <div class="note-footer">
-                {% if note.type == 'video' and note.video_url %}
-                    <button onclick="window.open('{{ note.video_url }}','_blank')">▶ Watch Video</button>
-                {% elif note.file %}
-                    <a href="{{ note.file.url }}" download>⬇ Download PDF</a>
-                {% else %}
-                    <span>No file/video</span>
+                {% if note.file %}
+                <a href="{{ note.file.url }}" download>⬇ Download PDF</a>
+                {% endif %}
+                {% if note.video_url %}
+                <button onclick="window.open('{{ note.video_url }}','_blank')">▶ Watch Video</button>
                 {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
-    {% else %}
-        <p>No notes available yet. Please check back later.</p>
-    {% endif %}
+
 </div>
+
 <script>
 // NAV TOGGLE
 const navToggle = document.getElementById('nav-toggle');
 const navLinks = document.getElementById('nav-links');
+navToggle.addEventListener('click', () => { navLinks.classList.toggle('show'); });
+document.querySelectorAll('#nav-links a').forEach(link => { link.addEventListener('click', () => { navLinks.classList.remove('show'); }); });
 
-navToggle.addEventListener('click', () => {
-  navLinks.classList.toggle('show');
-});
+// FILTER FUNCTION
+function filterNotes() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const typeFilter = document.getElementById('typeFilter').value;
+    const notes = document.querySelectorAll('#notesGrid .note-card');
 
-// CLOSE MENU WHEN A LINK IS CLICKED (mobile)
-document.querySelectorAll('#nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('show');
-  });
-});
+    notes.forEach(note => {
+        const title = note.dataset.title;
+        const category = note.dataset.category;
+        const type = note.dataset.type;
+
+        const matchesSearch = title.includes(searchInput) || category.includes(searchInput);
+        const matchesType = (typeFilter === 'all') || (type === typeFilter);
+
+        note.style.display = (matchesSearch && matchesType) ? '' : 'none';
+    });
+}
 </script>
+
 </body>
 </html>
