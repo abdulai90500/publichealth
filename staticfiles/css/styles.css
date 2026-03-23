@@ -1,0 +1,309 @@
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --ink: #0d0d14;
+  --paper: #f5f2eb;
+  --cream: #faf8f3;
+  --gold: #c8972a;
+  --gold-light: #e8b84b;
+  --gold-pale: #f5e9cc;
+  --teal: #1a5f6e;
+  --teal-light: #2a8a9f;
+  --red: #c0392b;
+  --muted: #7a7068;
+  --border: #ddd8cc;
+  --shadow: 0 4px 24px rgba(13,13,20,0.10);
+  --shadow-lg: 0 12px 48px rgba(13,13,20,0.16);
+}
+
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* =========================
+   NOISE OVERLAY
+========================= */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+#main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 5%;
+  background: rgba(245,242,235,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* LOGO */
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.nav-logo span {
+  background: var(--gold);
+  color: white;
+  font-size: 0.7rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+/* LINKS */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  background: var(--teal);
+  color: white;
+}
+
+.nav-links a.active {
+  color: var(--teal);
+}
+
+/* CTA */
+.nav-cta {
+  background: var(--ink);
+  color: white !important;
+  font-weight: 600;
+}
+
+.nav-cta:hover {
+  background: var(--teal);
+}
+
+/* TOGGLE */
+.nav-toggle {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+/* TOGGLE BUTTON */
+.nav-toggle {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* MOBILE NAV */
+@media (max-width: 768px) {
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    width: 100%;
+    background: #fff;
+
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px 0;
+    display: none;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+/* MOBILE NAV */
+@media (max-width: 768px) {
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    width: 100%;
+
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    background: white;
+    padding: 20px 0;
+    display: none;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+
+/* =========================
+   HERO
+========================= */
+#home {
+  min-height: 100vh;
+  padding: 120px 5% 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  background: linear-gradient(135deg, var(--cream), var(--gold-pale));
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: var(--teal);
+  color: white;
+  padding: 14px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: var(--ink);
+}
+
+/* =========================
+   SECTIONS
+========================= */
+section {
+  padding: 90px 5%;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.section-sub {
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+/* =========================
+   CARDS (Reusable)
+========================= */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+
+/* =========================
+   LIBRARY GRID
+========================= */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.note-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.note-title {
+  font-weight: 700;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.5);
+  padding: 40px 5%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  color: white;
+  font-weight: bold;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  #home {
+    grid-template-columns: 1fr;
+  }
+}
