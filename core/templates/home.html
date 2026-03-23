@@ -1,0 +1,694 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Health Portal</title>
+
+<style>
+
+/* ===== GENERAL ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #1b4965;
+}
+
+.nav-logo img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* ===== NAVBAR ===== */
+#main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+#main-nav.hide {
+  transform: translateY(-100%);
+}
+
+.nav-logo {
+  font-weight: bold;
+  font-size: 20px;
+  color: #1b4965;
+}
+
+.nav-logo span {
+  color: #06d6a0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* TOGGLE */
+.nav-toggle {
+  display: none;
+  font-size: 28px;
+  border: none;
+  background: none;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    align-items: center;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+
+  .nav-links.show {
+    max-height: 500px;
+  }
+}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+#home { background: #f0f8ff; }
+#about { background: #e6f7f5; }
+#services { background: #fdf3f5; }
+#library { background: #f5f5f5; }
+#team { background: #eef7ff; }
+#contact { background: #f9f9f9; }
+#about {
+  padding: 60px 20px;
+  background: #f4f7fb;
+  display: flex;
+  justify-content: center;
+}
+
+.about-container {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+}
+
+.about-title {
+  font-size: 32px;
+  color: #1a2a6c;
+  margin-bottom: 25px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.about-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  text-align: left;
+  line-height: 1.7;
+  color: #333;
+  transition: 0.3s;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+}
+
+.about-card p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.about-list {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.about-list li {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #1a2a6c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 24px;
+  }
+
+  .about-card {
+    padding: 20px;
+  }
+}
+/* ===== CARDS ===== */
+.card {
+  background: white;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  width: 250px;
+}
+/* CONTAINER */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+/* GRID LAYOUT */
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* NOTE CARD */
+.note-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+.note-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+/* TYPE RIBBON */
+.note-card .note-type {
+    position: absolute;
+    top: 15px;
+    right: -10px;
+    background: #ffbe0b;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}/* ===== HOME ===== */
+#home {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+/* SLIDER */
+.slider {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.slide {
+  width: 100%;
+  display: none;
+  border-radius: 15px;
+}
+
+.slide.active {
+  display: block;
+}
+
+/* TEXT */
+.home-text {
+  margin-top: 20px;
+}
+
+.home-text h1 {
+  font-size: 32px;
+  color: #1b4965;
+}
+
+.home-text p {
+  color: #555;
+  font-size: 16px;
+}
+
+/* NOTE HEADER & META */
+.note-header {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 20px 15px 5px 15px;
+}
+.note-meta {
+    font-size: 14px;
+    color: #666;
+    padding: 0 15px 15px 15px;
+}
+
+/* FOOTER BUTTONS */
+.note-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+.note-footer a, .note-footer button {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.note-footer a {
+    background: #64a1ec;
+    color: #fff;
+}
+.note-footer a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.note-footer button {
+    background: #5656ef;
+    color: #fff;
+}
+.note-footer button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+#team {
+  padding: 60px 20px;
+  background: #f4f7fb;
+  text-align: center;
+}
+
+.team-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #1a2a6c;
+}
+
+/* GRID */
+.team-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.team-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+/* IMAGE */
+.team-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.team-card h3 {
+  margin: 10px 0 5px;
+  color: #1a2a6c;
+}
+
+.team-card p {
+  color: #555;
+  font-size: 14px;
+}
+
+/* TABLET */
+@media (max-width: 992px) {
+  .team-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .team-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 400px) {
+  .team-container {
+    grid-template-columns: 1fr;
+  }
+}
+/* RESPONSIVE */
+@media(max-width: 768px){
+    .notes-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+@media(max-width: 480px){
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ===== FOOTER ===== */
+footer {
+  background: #1b4965;
+  color: white;
+  padding: 30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="main-nav">
+  <div class="nav-logo">
+  <img src="{% static 'images/logo.jpeg' %}" alt="Logo">
+  <span>Unimak Public Health <b>Portal</b></span>
+</div>
+  
+
+  <button id="nav-toggle" class="nav-toggle">☰</button>
+
+  <ul id="nav-links" class="nav-links">
+        <li><a href="{% url 'home' %}" class="active">Home</a></li>
+    <li><a href="{% url 'home' %}">About</a></li>
+    <li><a href="{% url 'home' %}">Services</a></li>
+    <li><a href="{% url 'home' %}">Team</a></li>
+    <li><a href="{% url 'home' %}">Contact</a></li>
+    <li><a href="{% url 'library' %}">Library</a></li>
+    <li><a class="nav-cta" href="{% url 'login' %}">Admin Login</a></li>
+  </ul>
+</nav>
+
+<section id="home">
+
+  <!-- IMAGE SLIDER -->
+  <div class="slider">
+    <img src="{% static 'images/Unimak.jpeg' %}" class="slide active">
+    <img src="{% static 'images/logo.jpeg' %}" class="slide">
+  </div>
+
+  <!-- TEXT BELOW -->
+ <div class="home-text">
+  <h1>Welcome to the University of Makeni Public Health Society Portal</h1>
+  <p>Your hub for academic notes and exam resources</p>
+</div>
+
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="about-container">
+
+    <h2 class="about-title">ABOUT PUBLIC HEALTH – UNIMAK</h2>
+
+    <div class="about-card">
+      <p>
+        The Public Health BSc (Hons) program at the University of Makeni is a 
+        four-year degree program that includes coursework, dissertation writing, 
+        and an internship.
+      </p>
+
+      <p>
+        The program is structured into two major areas. In the second year, 
+        students have the opportunity to specialize in:
+      </p>
+
+      <ul class="about-list">
+        <li>Public Health Epidemiology</li>
+        <li>Public Health Laboratory Sciences</li>
+      </ul>
+
+      <p>
+        This specialization equips students with essential skills and knowledge 
+        relevant to both epidemiology and the public health laboratory sector.
+      </p>
+    </div>
+
+  </div>
+</section>
+<!-- ===== SERVICES ===== -->
+<!-- ===== SERVICES SECTION ===== -->
+<section id="services" style="padding: 50px; background-color: #f8f9fa; font-family: Arial, sans-serif;">
+  <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 30px; color: #1d3557;">Services & Career Paths</h2>
+  
+  <!-- Service Cards -->
+  <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 50px;">
+    <div style="background-color: #457b9d; color: white; padding: 30px 40px; border-radius: 15px; text-align: center; font-size: 1.2em; cursor: pointer; transition: transform 0.3s;">
+      📄 Notes
+    </div>
+    <div style="background-color: #1d3557; color: white; padding: 30px 40px; border-radius: 15px; text-align: center; font-size: 1.2em; cursor: pointer; transition: transform 0.3s;">
+      📝 Exams
+    </div>
+    <div style="background-color: #e63946; color: white; padding: 30px 40px; border-radius: 15px; text-align: center; font-size: 1.2em; cursor: pointer; transition: transform 0.3s;">
+      🎥 Videos
+    </div>
+  </div>
+
+  <!-- Career Paths Grid -->
+  <div style="display: flex; gap: 50px; flex-wrap: wrap; justify-content: center;">
+    
+    <!-- Epidemiology Careers -->
+    <div style="flex: 1 1 400px; background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      <h3 style="color: #1d3557; margin-bottom: 20px;">Public Health Epidemiology Careers</h3>
+      <ul style="line-height: 1.8; color: #333;">
+        <li>Public Health Consultant</li>
+        <li>Epidemiologist</li>
+        <li>Researcher</li>
+        <li>Health Services Manager</li>
+        <li>Health Promotion Officer</li>
+        <li>Health Educator Officer</li>
+        <li>Surveillance Officer</li>
+        <li>Environmental Health Officer</li>
+        <li>Public Health Researcher</li>
+        <li>Monitoring & Evaluation (M&E) Officer</li>
+        <li>Occupational Health & Safety Officer</li>
+        <li>WASH Officer (Water, Sanitation & Hygiene)</li>
+        <li>And other related roles</li>
+      </ul>
+    </div>
+
+    <!-- Laboratory Careers -->
+    <div style="flex: 1 1 400px; background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      <h3 style="color: #1d3557; margin-bottom: 20px;">Public Health Laboratory Careers</h3>
+      <ul style="line-height: 1.8; color: #333;">
+        <li>Public Health Laboratory Scientist</li>
+        <li>Laboratory Director</li>
+        <li>Microbiologist</li>
+        <li>Research Scientist</li>
+        <li>Epidemiologist</li>
+        <li>Biostatistician</li>
+        <li>Clinical Laboratory Scientist</li>
+        <li>Laboratory Research Lead</li>
+        <li>And other related roles</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== LIBRARY ===== -->
+<div class="header">
+    <h2>📚 Public Health Library</h2>
+</div>
+
+<div class="container">
+    {% if notes %}
+    <div class="notes-grid">
+        {% for note in notes %}
+        <div class="note-card">
+            <div class="note-type">{{ note.type|capfirst }}</div>
+            <div class="note-header">{{ note.title }}</div>
+            <div class="note-meta">Year {{ note.year }} | Category: {{ note.category }} | Uploaded: {{ note.uploaded_at|date:"M d, Y" }}</div>
+            <div class="note-footer">
+                {% if note.type == 'video' and note.video_url %}
+                    <button onclick="window.open('{{ note.video_url }}','_blank')">▶ Watch Video</button>
+                {% elif note.file %}
+                    <a href="{{ note.file.url }}" download>⬇ Download PDF</a>
+                {% else %}
+                    <span>No file/video</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No notes available yet. Please check back later.</p>
+    {% endif %}
+</div>
+
+<!-- ===== TEAM ===== -->
+<section id="team">
+  <h2 class="team-title">PUBLIC HEALTH SOCIETY – EXECUTIVE MEMBERS</h2>
+
+  <div class="team-container">
+    
+    <div class="team-card">
+      <img src="{% static 'images/P.jpeg' %}" alt="Member 1">
+      <h3> Ibrahim Joseph Kamara</h3>
+      <p>President</p>
+    </div>
+    <div class="team-card">
+      <img src="{% static 'images/VP.jpeg' %}" alt="Member 2">
+      <h3> MABINTY MANSARAY</h3>
+      <p>Vice President</p>
+    </div>
+    <div class="team-card">
+      <img src="{% static 'images/Cheif.jpeg' %}" alt="Member 2">
+      <h3> Maimouna Yahya Jalloh</h3>
+      <p>Chief Minister</p>
+    </div>
+
+    <div class="team-card">
+      <img src="{% static 'images/M.jpeg' %}" alt="Member 2">
+      <h3> Mariama Turay</h3>
+      <p>Public Relations Officer</p>
+    </div>
+
+    <div class="team-card">
+      <img src="{% static 'images/J.jpeg' %}" alt="Member 3">
+      <h3>Jeffinatu A. Turay</h3>
+      <p>Organising Secretary:</p>
+    </div>
+
+    <div class="team-card">
+      <img src="{% static 'images/MA.jpeg' %}" alt="Member 4">
+      <h3>Massah Jina Kamara</h3>
+      <p>Financial Secretary:</p>
+    </div>
+
+    <div class="team-card">
+      <img src="{% static 'images/SC.jpeg' %}" alt="Member 5">
+      <h3>Simeon Sallieu Kanu</h3>
+      <p>Secretary General</p>
+    </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" style="padding: 50px 20px; background-color: #7678ec; text-align: center; font-family: Arial, sans-serif;">
+  <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #333;">Contact Us</h2>
+  <div style="max-width: 500px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    
+    <p style="font-size: 1.2rem; margin: 15px 0;">
+      📧 <a href="mailto:publichealthsocietyunimak@gmail.com" style="color: #007bff; text-decoration: none;">publichealthsocietyunimak@gmail.com</a>
+    </p>
+    
+    <p style="font-size: 1.2rem; margin: 15px 0;">
+      📞 <a href="tel:+23279033028" style="color: #007bff; text-decoration: none;">+232 79 033 028</a>
+    </p>
+
+    <p style="margin-top: 20px; font-size: 1rem; color: #666;">
+      Feel free to reach out to us for academic resources, events, or any inquiries!
+    </p>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 Unimak Public Health Society Portal</p>
+</footer>
+
+<!-- ===== JS ===== -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const toggleBtn = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("nav-links");
+  const navbar = document.getElementById("main-nav");
+
+  // TOGGLE
+  toggleBtn.addEventListener("click", function () {
+    navLinks.classList.toggle("show");
+  });
+
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function showSlide() {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[index].classList.add("active");
+
+  index++;
+  if (index >= slides.length) {
+    index = 0;
+  }
+}
+
+setInterval(showSlide, 3000); // change every 3 seconds
+
+  // CLOSE ON CLICK
+  document.querySelectorAll("#nav-links a").forEach(link => {
+    link.addEventListener("click", function () {
+      navLinks.classList.remove("show");
+    });
+  });
+
+  // HIDE ON SCROLL
+  let lastScroll = 0;
+
+  window.addEventListener("scroll", () => {
+    let current = window.scrollY;
+
+    if (current > lastScroll && current > 100) {
+      navbar.classList.add("hide");
+    } else {
+      navbar.classList.remove("hide");
+    }
+
+    lastScroll = current;
+  });
+
+});
+</script>
+
+</body>
+</html>
