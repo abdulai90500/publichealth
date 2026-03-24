@@ -1,21 +1,18 @@
 from pathlib import Path
-import os
 
 # ========================
 # BASE DIRECTORY
 # ========================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # ========================
-# SECURITY SETTINGS
+# SECURITY
 # ========================
-SECRET_KEY = 'your-secret-key-here'  # Change this in production
+SECRET_KEY = 'your-secret-key-here'
 
-DEBUG = False
+DEBUG = True   # 👉 change to False when deploying
 
-ALLOWED_HOSTS = ['*']  # Change later to your domain
-
+ALLOWED_HOSTS = ['*']  # 👉 change in production
 
 # ========================
 # APPLICATIONS
@@ -31,16 +28,11 @@ INSTALLED_APPS = [
     'core',  # your app
 ]
 
-
 # ========================
 # MIDDLEWARE
 # ========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    # Important for deployment (Render)
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,12 +41,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 # ========================
-# URLS & TEMPLATES
+# URLS
 # ========================
 ROOT_URLCONF = 'campus_site.urls'
 
+# ========================
+# TEMPLATES
+# ========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -62,6 +56,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -70,9 +65,10 @@ TEMPLATES = [
     },
 ]
 
-
+# ========================
+# WSGI
+# ========================
 WSGI_APPLICATION = 'campus_site.wsgi.application'
-
 
 # ========================
 # DATABASE
@@ -84,7 +80,6 @@ DATABASES = {
     }
 }
 
-
 # ========================
 # PASSWORD VALIDATION
 # ========================
@@ -95,37 +90,29 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # ========================
 # INTERNATIONALIZATION
 # ========================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
 USE_TZ = True
 
-
 # ========================
-# STATIC FILES (VERY IMPORTANT)
+# STATIC FILES (IMPORTANT 🔥)
 # ========================
 STATIC_URL = '/static/'
 
+# DO NOT ADD STATICFILES_DIRS ❌ (this was your mistake)
+
+# This is for production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Only if you have a folder named "static"
-STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# WhiteNoise (for serving static files)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 # ========================
-# MEDIA FILES
+# MEDIA FILES (UPLOADS)
 # ========================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
 
 # ========================
 # DEFAULT PRIMARY KEY
