@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # ========================
 # BASE DIRECTORY
@@ -8,11 +9,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ========================
 # SECURITY
 # ========================
-SECRET_KEY = 'your-secret-key-here'
-
+SECRET_KEY = 'your-secret-key-here'  # replace with a strong secret in production
 DEBUG = False  # Must be False in production
 
-ALLOWED_HOSTS = ['your-app-name.onrender.com']  # Replace with your Render URL
+# Replace with your Render app domain
+ALLOWED_HOSTS = ['your-app-name.onrender.com']  
 
 # ========================
 # APPLICATIONS
@@ -33,7 +34,7 @@ INSTALLED_APPS = [
 # ========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # For static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,7 +54,7 @@ ROOT_URLCONF = 'campus_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # optional
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,16 +101,16 @@ USE_I18N = True
 USE_TZ = True
 
 # ========================
-# STATIC FILES
+# STATIC FILES (WhiteNoise)
 # ========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Use WhiteNoise for production
+# WhiteNoise will serve static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ========================
-# MEDIA FILES
+# MEDIA FILES (uploads)
 # ========================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
