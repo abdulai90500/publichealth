@@ -10,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ========================
 SECRET_KEY = 'your-secret-key-here'  # replace with a strong secret in production
-DEBUG = False  # Must be False in production
+DEBUG = True  # Must be False in production
 
 # Replace with your Render app domain
-ALLOWED_HOSTS = ['your-app-name.onrender.com']  
+ALLOWED_HOSTS = ['*']  
 
 # ========================
 # APPLICATIONS
